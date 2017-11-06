@@ -1,0 +1,39 @@
+//product1
+Product2 p = new Product2();
+p.Name = 'Test Product';
+p.Description = 'Test desc';
+p.Product_Type__c = 'PG';
+p.subsidiary__c = sub.Id;
+p.IsActive = true;
+p.Is_Bundle__c = true;
+insert p;                                    
+
+//standard price book entry for Product p
+PricebookEntry pbe1 = new PricebookEntry();
+pbe1.Pricebook2Id = Test.getStandardPricebookId();
+pbe1.IsActive = true;
+pbe1.Product2Id = p.Id;
+pbe1.UseStandardPrice = false;
+pbe1.CurrencyISOCode = 'SGD';
+pbe1.UnitPrice = 100;                                                       
+insert pbe1;                      
+
+//custom pricebook
+PriceBook2 pb = new PriceBook2();
+pb.Name = 'Custom PB';
+pb.Subsidiary__c = sub.Id;
+pb.IsActive = true;            
+insert pb;           
+
+//custom pricebook entry for p1
+PricebookEntry pbe = new PricebookEntry();
+pbe.Pricebook2Id = pb.Id;
+pbe.IsActive = true;
+pbe.Product2Id = p.Id;
+pbe.UseStandardPrice = false;
+pbe.CurrencyISOCode = 'SGD';
+pbe.UnitPrice = 100;                                                       
+insert pbe; 
+
+pbe.UseStandardPrice = true;
+update pbe;
